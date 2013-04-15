@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Dashclock Notifications</string>
+    <string name="notification_service_description">Displays Notifications in Dashclock</string>
+
+</resources>
