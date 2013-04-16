@@ -7,9 +7,11 @@ import java.util.Set;
 
 import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ServiceInfo;
+import android.net.Uri;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
@@ -20,10 +22,10 @@ public class DashclockService extends DashClockExtension {
 		public String time;
 		public String app;
 		public String text;
-		public String num;
+		public int num;
 		public int icon;
 		public PendingIntent intent;
-		public NotificationInfo(String time, String app, String text, String num, int icon, PendingIntent intent) {
+		public NotificationInfo(String time, String app, String text, int num, int icon, PendingIntent intent) {
 			this.time = time;
 			this.app = app;
 			this.text = text;
@@ -31,42 +33,48 @@ public class DashclockService extends DashClockExtension {
 			this.icon = icon;
 			this.intent = intent;
 		}
+		@Override
+		public boolean equals(Object that) {
+			if(that == null)
+				return false;
+			if(this == that)
+				return true;
+			if(this.getClass() != that.getClass())
+				return false;
+			
+			NotificationInfo ni = (NotificationInfo) that;
+			if(this.app.equals("Messaging") || ni.app.equals("Messaging"))
+				return false;
+			return this.app.equals(ni.app);
+		}
 	}
 	
 	private static List<NotificationInfo> notifications = new LinkedList<NotificationInfo>();
-	private static List<String> notificationApps = new LinkedList<String>();
 	private static Set<DashclockService> widgets = new HashSet<DashclockService>();
 	
-	public synchronized static void addNotification(NotificationInfo ni)
-	{
-		int index = notificationApps.indexOf(ni.app + " :: " + ni.text);
-		if(index >= 0 && index < notificationApps.size() && index < notifications.size()){
+	public synchronized static void addNotification(NotificationInfo ni) {
+		int index = notifications.indexOf(ni);
+		if(index >= 0 && index < notifications.size()) {
 			notifications.remove(index);
-			notificationApps.remove(index);
 		}
 		notifications.add(0, ni);
-		notificationApps.add(0, ni.app + " :: " + ni.text);
-		if(notifications.size() > 10) {
-			notifications.remove(10);
-			notificationApps.remove(10);
+		if(notifications.size() > 50) {
+			notifications.remove(50);
 		}
 		updateWidgets();
 	}
 	
-	private synchronized static NotificationInfo getNotification(int num)
-	{
+	private synchronized static NotificationInfo getNotification(int num) {
 		return num >= notifications.size() ? null : notifications.get(num);
 	}
 	
-	public synchronized static void clearNotifications()
-	{
+	public synchronized static void clearNotifications() {
 		notifications.clear();
 		updateWidgets();
 	}
 	
-	public static void updateWidgets(){
-		for(DashclockService ds : widgets)
-		{
+	public static void updateWidgets() {
+		for(DashclockService ds : widgets) {
 			ds.updateWidget();
 		}
 	}
@@ -98,22 +106,21 @@ public class DashclockService extends DashClockExtension {
 		updateWidget();
 	}
 	
-	public synchronized void updateWidget()
-	{
+	public synchronized void updateWidget() {
 		NotificationInfo ni = getNotification(widgetNum);
 		if(ni == null) {
 			publishUpdate(new ExtensionData()
     		.visible(false));
 		} else {
+			String body = ni.text;
 			publishUpdate(new ExtensionData()
         		.visible(true)
         		.icon(ni.icon)
         		.status(ni.text)
         		.expandedTitle(ni.app)
-        		.expandedBody(ni.text));
-        		//.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.toString()))));
+        		.expandedBody(body)
+        		.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.getCreatorPackage()))));
         	// TODO fix icon
-			// TODO fix clickIntent
 		}
 	}
 	

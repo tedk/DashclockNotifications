@@ -69,7 +69,7 @@ public class NotificationListenerService extends AccessibilityService {
 		}
 		if (appName == null)
 			appName = packageName;
-		String num = Integer.toString(n.number);
+		int num = n.number;
 //		Context c = getApplicationContext();
 //		try {
 //			c = createPackageContext(packageName, 0);

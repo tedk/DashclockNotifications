@@ -2,16 +2,57 @@
 <resources>
 
     <string name="app_name">Dashclock Notifications</string>
-    <string name="app_slot1">Notification #1</string>
-    <string name="app_slot2">Notification #2</string>
-    <string name="app_slot3">Notification #3</string>
-    <string name="app_slot4">Notification #4</string>
-    <string name="app_slot5">Notification #5</string>
-    <string name="app_slot6">Notification #6</string>
-    <string name="app_slot7">Notification #7</string>
-    <string name="app_slot8">Notification #8</string>
-    <string name="app_slot9">Notification #9</string>
-    <string name="app_slot10">Notification #10</string>
     <string name="notification_service_description">Displays Notifications in Dashclock</string>
+    
+    <string name="app_slot01">Notification #01</string>
+    <string name="app_slot02">Notification #02</string>
+    <string name="app_slot03">Notification #03</string>
+    <string name="app_slot04">Notification #04</string>
+    <string name="app_slot05">Notification #05</string>
+    <string name="app_slot06">Notification #06</string>
+    <string name="app_slot07">Notification #07</string>
+    <string name="app_slot08">Notification #08</string>
+    <string name="app_slot09">Notification #09</string>
+    <string name="app_slot10">Notification #10</string>
+    <string name="app_slot11">Notification #11</string>
+    <string name="app_slot12">Notification #12</string>
+    <string name="app_slot13">Notification #13</string>
+    <string name="app_slot14">Notification #14</string>
+    <string name="app_slot15">Notification #15</string>
+    <string name="app_slot16">Notification #16</string>
+    <string name="app_slot17">Notification #17</string>
+    <string name="app_slot18">Notification #18</string>
+    <string name="app_slot19">Notification #19</string>
+    <string name="app_slot20">Notification #20</string>
+    <string name="app_slot21">Notification #21</string>
+    <string name="app_slot22">Notification #22</string>
+    <string name="app_slot23">Notification #23</string>
+    <string name="app_slot24">Notification #24</string>
+    <string name="app_slot25">Notification #25</string>
+    <string name="app_slot26">Notification #26</string>
+    <string name="app_slot27">Notification #27</string>
+    <string name="app_slot28">Notification #28</string>
+    <string name="app_slot29">Notification #29</string>
+    <string name="app_slot30">Notification #30</string>
+    <string name="app_slot31">Notification #31</string>
+    <string name="app_slot32">Notification #32</string>
+    <string name="app_slot33">Notification #33</string>
+    <string name="app_slot34">Notification #34</string>
+    <string name="app_slot35">Notification #35</string>
+    <string name="app_slot36">Notification #36</string>
+    <string name="app_slot37">Notification #37</string>
+    <string name="app_slot38">Notification #38</string>
+    <string name="app_slot39">Notification #39</string>
+    <string name="app_slot40">Notification #40</string>
+    <string name="app_slot41">Notification #41</string>
+    <string name="app_slot42">Notification #42</string>
+    <string name="app_slot43">Notification #43</string>
+    <string name="app_slot44">Notification #44</string>
+    <string name="app_slot45">Notification #45</string>
+    <string name="app_slot46">Notification #46</string>
+    <string name="app_slot47">Notification #47</string>
+    <string name="app_slot48">Notification #48</string>
+    <string name="app_slot49">Notification #49</string>
+    <string name="app_slot50">Notification #50</string>
 
 </resources>
