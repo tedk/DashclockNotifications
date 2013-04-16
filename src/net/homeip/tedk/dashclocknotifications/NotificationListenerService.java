@@ -5,6 +5,7 @@ import java.util.Date;
 
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -98,7 +99,8 @@ public class NotificationListenerService extends AccessibilityService {
 //				} catch (Exception e) {
 //				}
 //		}
-		DashclockService.AddNotification(new DashclockService.NotificationInfo(time, appName, text, num, icon));
+		PendingIntent intent = n.contentIntent;
+		DashclockService.addNotification(new DashclockService.NotificationInfo(time, appName, text, num, icon, intent));
 	}
 
 	@Override

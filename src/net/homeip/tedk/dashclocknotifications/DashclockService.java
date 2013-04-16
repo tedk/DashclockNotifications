@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -21,12 +22,14 @@ public class DashclockService extends DashClockExtension {
 		public String text;
 		public String num;
 		public int icon;
-		public NotificationInfo(String time, String app, String text, String num, int icon) {
+		public PendingIntent intent;
+		public NotificationInfo(String time, String app, String text, String num, int icon, PendingIntent intent) {
 			this.time = time;
 			this.app = app;
 			this.text = text;
 			this.num = num;
 			this.icon = icon;
+			this.intent = intent;
 		}
 	}
 	
@@ -34,15 +37,15 @@ public class DashclockService extends DashClockExtension {
 	private static List<String> notificationApps = new LinkedList<String>();
 	private static Set<DashclockService> widgets = new HashSet<DashclockService>();
 	
-	public synchronized static void AddNotification(NotificationInfo ni)
+	public synchronized static void addNotification(NotificationInfo ni)
 	{
-		int index = notificationApps.indexOf(ni.app);
-		if(index > -1){
+		int index = notificationApps.indexOf(ni.app + " :: " + ni.text);
+		if(index >= 0 && index < notificationApps.size() && index < notifications.size()){
 			notifications.remove(index);
 			notificationApps.remove(index);
 		}
 		notifications.add(0, ni);
-		notificationApps.add(0, ni.app);
+		notificationApps.add(0, ni.app + " :: " + ni.text);
 		if(notifications.size() > 10) {
 			notifications.remove(10);
 			notificationApps.remove(10);
@@ -108,7 +111,9 @@ public class DashclockService extends DashClockExtension {
         		.status(ni.text)
         		.expandedTitle(ni.app)
         		.expandedBody(ni.text));
-			// TODO fix icon and add clickIntent
+        		//.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.toString()))));
+        	// TODO fix icon
+			// TODO fix clickIntent
 		}
 	}
 	

@@ -14,8 +14,11 @@ public class ScreenReceiver extends BroadcastReceiver {
 			locked = true;
         }
 		if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)){
-			locked = false;
-			DashclockService.clearNotifications();
+			if(locked)
+			{
+				locked = false;
+				DashclockService.clearNotifications();
+			}
         }
 	}
 	
