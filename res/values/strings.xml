@@ -2,6 +2,11 @@
 <resources>
 
     <string name="app_name">Dashclock Notifications</string>
+    <string name="app_slot1">Notification #1</string>
+    <string name="app_slot2">Notification #2</string>
+    <string name="app_slot3">Notification #3</string>
+    <string name="app_slot4">Notification #4</string>
+    <string name="app_slot5">Notification #5</string>
     <string name="notification_service_description">Displays Notifications in Dashclock</string>
 
 </resources>
