@@ -7,6 +7,11 @@
     <string name="app_slot3">Notification #3</string>
     <string name="app_slot4">Notification #4</string>
     <string name="app_slot5">Notification #5</string>
+    <string name="app_slot6">Notification #6</string>
+    <string name="app_slot7">Notification #7</string>
+    <string name="app_slot8">Notification #8</string>
+    <string name="app_slot9">Notification #9</string>
+    <string name="app_slot10">Notification #10</string>
     <string name="notification_service_description">Displays Notifications in Dashclock</string>
 
 </resources>

@@ -5,10 +5,10 @@ import java.util.Date;
 
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.view.accessibility.AccessibilityEvent;
 
 public class NotificationListenerService extends AccessibilityService {
@@ -25,6 +25,11 @@ public class NotificationListenerService extends AccessibilityService {
 	public void setUp() {
 		dateFormat = DateFormat.getTimeInstance(DateFormat.LONG);
 		pm = getPackageManager();
+		
+		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+		filter.addAction(Intent.ACTION_USER_PRESENT);
+		BroadcastReceiver br = new ScreenReceiver();
+		registerReceiver(br, filter);
 	}
 	
 	public void tearDown() {
@@ -40,6 +45,8 @@ public class NotificationListenerService extends AccessibilityService {
 
 	@Override
 	public void onAccessibilityEvent(AccessibilityEvent event) {
+		if(!ScreenReceiver.locked)
+			return;
 		if (event == null)
 			return;
 		Notification n = (Notification) event.getParcelableData();
@@ -47,27 +54,9 @@ public class NotificationListenerService extends AccessibilityService {
 			return;
 
 		String text = n.tickerText == null || n.tickerText.toString().trim().length() == 0 ? null : n.tickerText.toString().trim();
-		Uri soundUri = null;
-		if(n.sound != null) {
-		   soundUri = n.sound;
-		} else if((n.defaults & Notification.DEFAULT_SOUND) == Notification.DEFAULT_SOUND) {
-		   soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		}
-		boolean vibrate = 
-				( n.vibrate != null && n.vibrate.length > 0)
-				|| ((n.defaults & Notification.DEFAULT_VIBRATE) == Notification.DEFAULT_VIBRATE);
-		boolean lights =
-				((n.flags & Notification.FLAG_SHOW_LIGHTS) == Notification.FLAG_SHOW_LIGHTS)
-				|| ((n.defaults & Notification.DEFAULT_LIGHTS) == Notification.DEFAULT_LIGHTS);
 		
 		if (text == null)
 			return; // ignore blank notifications (downloads, gps, keyboard, etc.)
-		
-		//for now, we'll use the default sound for vibrate and lights
-		if (soundUri == null && (vibrate || lights))
-		{
-			soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		}
 
 		String time = dateFormat.format(new Date());
 		String packageName = event.getPackageName().toString();

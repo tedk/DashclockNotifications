@@ -31,20 +31,34 @@ public class DashclockService extends DashClockExtension {
 	}
 	
 	private static List<NotificationInfo> notifications = new LinkedList<NotificationInfo>();
+	private static List<String> notificationApps = new LinkedList<String>();
 	private static Set<DashclockService> widgets = new HashSet<DashclockService>();
 	
 	public synchronized static void AddNotification(NotificationInfo ni)
 	{
+		int index = notificationApps.indexOf(ni.app);
+		if(index > -1){
+			notifications.remove(index);
+			notificationApps.remove(index);
+		}
 		notifications.add(0, ni);
-		if(notifications.size() > 5) {
-			notifications.remove(5);
+		notificationApps.add(0, ni.app);
+		if(notifications.size() > 10) {
+			notifications.remove(10);
+			notificationApps.remove(10);
 		}
 		updateWidgets();
 	}
 	
-	public synchronized static NotificationInfo getNotification(int num)
+	private synchronized static NotificationInfo getNotification(int num)
 	{
 		return num >= notifications.size() ? null : notifications.get(num);
+	}
+	
+	public synchronized static void clearNotifications()
+	{
+		notifications.clear();
+		updateWidgets();
 	}
 	
 	public static void updateWidgets(){
@@ -91,7 +105,7 @@ public class DashclockService extends DashClockExtension {
 			publishUpdate(new ExtensionData()
         		.visible(true)
         		.icon(ni.icon)
-        		.status(ni.app)
+        		.status(ni.text)
         		.expandedTitle(ni.app)
         		.expandedBody(ni.text));
 			// TODO fix icon and add clickIntent
