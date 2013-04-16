@@ -11,10 +11,15 @@ public class LaunchActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String packageName = getIntent().getData().getHost();
-
-		PackageManager pm = getPackageManager();
-		Intent intent = pm.getLaunchIntentForPackage(packageName);
-		startActivity(intent);
+		
+		if(packageName != null) {
+			PackageManager pm = getPackageManager();
+			Intent intent = pm.getLaunchIntentForPackage(packageName);
+			if(intent != null)
+			{
+				startActivity(intent);
+			}
+		}
 		
 		finish();
 	}
