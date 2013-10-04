@@ -3,34 +3,36 @@ package net.homeip.tedk.dashclocknotifications;
 import java.text.DateFormat;
 import java.util.Date;
 
-import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.view.accessibility.AccessibilityEvent;
+import android.net.Uri;
+import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
-public class NotificationListenerService extends AccessibilityService {
+public class NotificationService extends NotificationListenerService {
 
 	private DateFormat dateFormat = null;
 	private PackageManager pm = null;
 
 	@Override
-	protected void onServiceConnected() {
-		super.onServiceConnected();
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		setUp();
+		super.onStartCommand(intent, flags, startId);
+		return START_STICKY;
 	}
 
 	public void setUp() {
 		dateFormat = DateFormat.getTimeInstance(DateFormat.LONG);
 		pm = getPackageManager();
-		
-		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-		filter.addAction(Intent.ACTION_USER_PRESENT);
-		BroadcastReceiver br = new ScreenReceiver();
-		registerReceiver(br, filter);
+		for(StatusBarNotification event : getActiveNotifications())
+		{
+			DashclockService.NotificationInfo ni = getNotificationInfo(event);
+			if(ni != null)
+				DashclockService.addNotification(ni);
+		}
 	}
 	
 	public void tearDown() {
@@ -39,25 +41,36 @@ public class NotificationListenerService extends AccessibilityService {
 	}
 
 	@Override
-	public boolean onUnbind(Intent intent) {
+	public void onDestroy() {
 		tearDown();
-		return super.onUnbind(intent);
+		super.onDestroy();
 	}
 
 	@Override
-	public void onAccessibilityEvent(AccessibilityEvent event) {
-		if(!ScreenReceiver.locked)
-			return;
+	public void onNotificationPosted(StatusBarNotification event) {
+		DashclockService.NotificationInfo ni = getNotificationInfo(event);
+		if(ni != null)
+			DashclockService.addNotification(ni);
+	}
+	
+	@Override
+	public void onNotificationRemoved(StatusBarNotification event) {
+		DashclockService.NotificationInfo ni = getNotificationInfo(event);
+		if(ni != null)
+			DashclockService.removeNotification(ni);
+	}
+	
+	private DashclockService.NotificationInfo getNotificationInfo(StatusBarNotification event) {
 		if (event == null)
-			return;
-		Notification n = (Notification) event.getParcelableData();
+			return null;
+		Notification n = (Notification) event.getNotification();
 		if (n == null)
-			return;
+			return null;
 
 		String text = n.tickerText == null || n.tickerText.toString().trim().length() == 0 ? null : n.tickerText.toString().trim();
 		
 		if (text == null)
-			return; // ignore blank notifications (downloads, gps, keyboard, etc.)
+			return null; // ignore blank notifications (downloads, gps, keyboard, etc.)
 
 		String time = dateFormat.format(new Date());
 		String packageName = event.getPackageName().toString();
@@ -65,7 +78,7 @@ public class NotificationListenerService extends AccessibilityService {
 		try {
 			appName = pm.getApplicationLabel(pm.getApplicationInfo(packageName, 0)).toString();
 		} catch (Exception e) {
-			//Log.e("NotificationListenerService", "Could not load application name", e);
+			Log.e("NotificationListenerService", "Could not load application name", e);
 		}
 		if (appName == null)
 			appName = packageName;
@@ -74,9 +87,10 @@ public class NotificationListenerService extends AccessibilityService {
 //		try {
 //			c = createPackageContext(packageName, 0);
 //		} catch (NameNotFoundException e) {
-//			//Log.e("NotificationListenerService", "Could not load application context", e);
+//			Log.e("NotificationListenerService", "Could not load application context", e);
 //		}
 		int icon = n.icon;
+		Uri iconUri = Uri.withAppendedPath(IconProvider.CONTENT_URI, packageName + "/" + icon);
 //		ByteArrayOutputStream baos = null;
 //		try {
 //			baos = new ByteArrayOutputStream();
@@ -91,7 +105,7 @@ public class NotificationListenerService extends AccessibilityService {
 //			baos.flush();
 //			icon = "data:image/png;base64," + Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP | Base64.URL_SAFE);
 //		} catch (Exception e) {
-//			//Log.e("NotificationListenerService", "Could not load icon", e);
+//			Log.e("NotificationListenerService", "Could not load icon", e);
 //		} finally {
 //			if (baos != null)
 //				try {
@@ -100,12 +114,7 @@ public class NotificationListenerService extends AccessibilityService {
 //				}
 //		}
 		PendingIntent intent = n.contentIntent;
-		DashclockService.addNotification(new DashclockService.NotificationInfo(time, appName, text, num, icon, intent));
-	}
-
-	@Override
-	public void onInterrupt() {
-		// do nothing for now
+		return new DashclockService.NotificationInfo(time, appName, text, num, iconUri, intent);
 	}
 
 }

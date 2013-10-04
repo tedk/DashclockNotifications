@@ -1,17 +1,17 @@
 package net.homeip.tedk.dashclocknotifications;
 
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ServiceInfo;
 import android.net.Uri;
+import android.util.Log;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
@@ -23,14 +23,14 @@ public class DashclockService extends DashClockExtension {
 		public String app;
 		public String text;
 		public int num;
-		public int icon;
+		public Uri iconUri;
 		public PendingIntent intent;
-		public NotificationInfo(String time, String app, String text, int num, int icon, PendingIntent intent) {
+		public NotificationInfo(String time, String app, String text, int num, Uri iconUri, PendingIntent intent) {
 			this.time = time;
 			this.app = app;
 			this.text = text;
 			this.num = num;
-			this.icon = icon;
+			this.iconUri = iconUri;
 			this.intent = intent;
 		}
 		@Override
@@ -43,25 +43,43 @@ public class DashclockService extends DashClockExtension {
 				return false;
 			
 			NotificationInfo ni = (NotificationInfo) that;
-			if(this.app.equals("Messaging") || ni.app.equals("Messaging"))
-				return false;
-			return this.app.equals(ni.app);
+			return this.app.equals(ni.app) && this.text.equals(ni.text);
 		}
 	}
 	
-	private static List<NotificationInfo> notifications = new LinkedList<NotificationInfo>();
-	private static Set<DashclockService> widgets = new HashSet<DashclockService>();
+	private static List<NotificationInfo> notifications = new ArrayList<NotificationInfo>();
+	private static List<DashclockService> widgets = new ArrayList<DashclockService>();
+	
+	private static volatile int initializationCount = 0;
+	
+	private synchronized static void initialize(Context context) {
+		if(initializationCount == 0) {
+			context.startService(new Intent(context, NotificationService.class));
+		}
+		++initializationCount;
+	}
+	
+	private synchronized static void destroy(Context context) {
+		--initializationCount;
+		if(initializationCount == 0) {
+			context.stopService(new Intent(context, NotificationService.class));
+		}
+	}
 	
 	public synchronized static void addNotification(NotificationInfo ni) {
-		int index = notifications.indexOf(ni);
-		if(index >= 0 && index < notifications.size()) {
-			notifications.remove(index);
-		}
+		removeNotification(ni);
 		notifications.add(0, ni);
 		if(notifications.size() > 50) {
 			notifications.remove(50);
 		}
 		updateWidgets();
+	}
+	
+	public synchronized static void removeNotification(NotificationInfo ni) {
+		int index = notifications.indexOf(ni);
+		if(index >= 0 && index < notifications.size()) {
+			notifications.remove(index);
+		}
 	}
 	
 	private synchronized static NotificationInfo getNotification(int num) {
@@ -90,14 +108,16 @@ public class DashclockService extends DashClockExtension {
 			String label = si.loadLabel(pm).toString();
 			widgetNum = Integer.parseInt(label.substring(label.indexOf('#') + 1)) - 1;
 		} catch (NameNotFoundException e) {
-			//Log.e("DashclockService", "Could not get ServiceInfo", e);
+			Log.e("DashclockService", "Could not get ServiceInfo", e);
 		}	
 		widgets.add(this);
+		initialize(this);
 	}
 	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		//destroy(this);
 		widgets.remove(this);
 	}
 	
@@ -115,12 +135,11 @@ public class DashclockService extends DashClockExtension {
 			String body = ni.text;
 			publishUpdate(new ExtensionData()
         		.visible(true)
-        		.icon(ni.icon)
+        		.iconUri(ni.iconUri)
         		.status(ni.text)
         		.expandedTitle(ni.app)
-        		.expandedBody(body)
-        		.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.getCreatorPackage()))));
-        	// TODO fix icon
+        		.expandedBody(body));
+        		//.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.getCreatorPackage()))));
 		}
 	}
 	

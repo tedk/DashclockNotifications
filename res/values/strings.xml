@@ -3,6 +3,7 @@
 
     <string name="app_name">Dashclock Notifications</string>
     <string name="notification_service_description">Displays Notifications in Dashclock</string>
+    <string name="settings_name">Settings</string>
     
     <string name="app_slot01">Notification #01</string>
     <string name="app_slot02">Notification #02</string>

@@ -4,18 +4,19 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17"/>
+    <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="18"/>
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name" 
+        android:allowBackup="true"
+        >
         <service
-            android:name=".NotificationListenerService"
-            android:exported="false"
+            android:name=".NotificationService"
             android:label="@string/app_name" 
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
             <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
+                <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
 
             <meta-data
@@ -32,12 +33,21 @@
 				<data android:scheme="dashclocknotifications"/>
 			</intent-filter>
         </activity>
+        <activity android:name=".SettingsActivity"
+     		android:label="@string/settings_name"
+     		android:exported="true" />
+        <provider
+            android:name=".IconProvider"
+            android:authorities="net.homeip.tedk.dashclocknotifications.iconprovider"
+            android:exported="true"
+            android:grantUriPermissions="true" />
+         
         
 		<!--
 		
 		for i in $(seq -w 1 50); do printf "package net.homeip.tedk.dashclocknotifications.slot;\n\nimport net.homeip.tedk.dashclocknotifications.DashclockService;\n\npublic class DashclockSlot$i extends DashclockService {\n\n\n}\n\n" > DashclockSlot$i.java; done
 		
-		for i in $(seq -w 1 50); do printf '        <service android:name=".slot.DashclockSlot'$i'"\n            android:icon="@drawable/ic_launcher"\n            android:label="@string/app_slot'$i'"\n            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">\n            <intent-filter>\n                <action android:name="com.google.android.apps.dashclock.Extension" />\n            </intent-filter>\n            <meta-data android:name="protocolVersion" android:value="1" />\n            <meta-data android:name="description"\n                android:value="@string/notification_service_description" />\n        </service>\n'; done
+		for i in $(seq -w 1 50); do printf '        <service android:name=".slot.DashclockSlot'$i'"\n            android:icon="@drawable/ic_launcher"\n            android:label="@string/app_slot'$i'"\n            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">\n            <intent-filter>\n                <action android:name="com.google.android.apps.dashclock.Extension" />\n            </intent-filter>\n            <meta-data android:name="protocolVersion" android:value="2" />\n            <meta-data android:name="worldReadable" android:value="false" />\n            <meta-data android:name="description"\n                android:value="@string/notification_service_description" />\n            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />\n        </service>\n'; done
 		
 		for i in $(seq -w 1 50); do printf '    <string name="app_slot'$i'">Notification #'$i'</string>\n'; done
 		
@@ -50,9 +60,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot02"
             android:icon="@drawable/ic_launcher"
@@ -61,9 +73,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot03"
             android:icon="@drawable/ic_launcher"
@@ -72,9 +86,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot04"
             android:icon="@drawable/ic_launcher"
@@ -83,9 +99,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot05"
             android:icon="@drawable/ic_launcher"
@@ -94,9 +112,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot06"
             android:icon="@drawable/ic_launcher"
@@ -105,9 +125,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot07"
             android:icon="@drawable/ic_launcher"
@@ -116,9 +138,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot08"
             android:icon="@drawable/ic_launcher"
@@ -127,9 +151,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot09"
             android:icon="@drawable/ic_launcher"
@@ -138,9 +164,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot10"
             android:icon="@drawable/ic_launcher"
@@ -149,9 +177,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot11"
             android:icon="@drawable/ic_launcher"
@@ -160,9 +190,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot12"
             android:icon="@drawable/ic_launcher"
@@ -171,9 +203,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot13"
             android:icon="@drawable/ic_launcher"
@@ -182,9 +216,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot14"
             android:icon="@drawable/ic_launcher"
@@ -193,9 +229,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot15"
             android:icon="@drawable/ic_launcher"
@@ -204,9 +242,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot16"
             android:icon="@drawable/ic_launcher"
@@ -215,9 +255,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot17"
             android:icon="@drawable/ic_launcher"
@@ -226,9 +268,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot18"
             android:icon="@drawable/ic_launcher"
@@ -237,9 +281,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot19"
             android:icon="@drawable/ic_launcher"
@@ -248,9 +294,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot20"
             android:icon="@drawable/ic_launcher"
@@ -259,9 +307,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot21"
             android:icon="@drawable/ic_launcher"
@@ -270,9 +320,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot22"
             android:icon="@drawable/ic_launcher"
@@ -281,9 +333,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot23"
             android:icon="@drawable/ic_launcher"
@@ -292,9 +346,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot24"
             android:icon="@drawable/ic_launcher"
@@ -303,9 +359,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot25"
             android:icon="@drawable/ic_launcher"
@@ -314,9 +372,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot26"
             android:icon="@drawable/ic_launcher"
@@ -325,9 +385,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot27"
             android:icon="@drawable/ic_launcher"
@@ -336,9 +398,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot28"
             android:icon="@drawable/ic_launcher"
@@ -347,9 +411,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot29"
             android:icon="@drawable/ic_launcher"
@@ -358,9 +424,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot30"
             android:icon="@drawable/ic_launcher"
@@ -369,9 +437,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot31"
             android:icon="@drawable/ic_launcher"
@@ -380,9 +450,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot32"
             android:icon="@drawable/ic_launcher"
@@ -391,9 +463,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot33"
             android:icon="@drawable/ic_launcher"
@@ -402,9 +476,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot34"
             android:icon="@drawable/ic_launcher"
@@ -413,9 +489,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot35"
             android:icon="@drawable/ic_launcher"
@@ -424,9 +502,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot36"
             android:icon="@drawable/ic_launcher"
@@ -435,9 +515,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot37"
             android:icon="@drawable/ic_launcher"
@@ -446,9 +528,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot38"
             android:icon="@drawable/ic_launcher"
@@ -457,9 +541,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot39"
             android:icon="@drawable/ic_launcher"
@@ -468,9 +554,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot40"
             android:icon="@drawable/ic_launcher"
@@ -479,9 +567,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot41"
             android:icon="@drawable/ic_launcher"
@@ -490,9 +580,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot42"
             android:icon="@drawable/ic_launcher"
@@ -501,9 +593,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot43"
             android:icon="@drawable/ic_launcher"
@@ -512,9 +606,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot44"
             android:icon="@drawable/ic_launcher"
@@ -523,9 +619,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot45"
             android:icon="@drawable/ic_launcher"
@@ -534,9 +632,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot46"
             android:icon="@drawable/ic_launcher"
@@ -545,9 +645,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot47"
             android:icon="@drawable/ic_launcher"
@@ -556,9 +658,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot48"
             android:icon="@drawable/ic_launcher"
@@ -567,9 +671,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot49"
             android:icon="@drawable/ic_launcher"
@@ -578,9 +684,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
         <service android:name=".slot.DashclockSlot50"
             android:icon="@drawable/ic_launcher"
@@ -589,9 +697,11 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="1" />
+            <meta-data android:name="protocolVersion" android:value="2" />
+            <meta-data android:name="worldReadable" android:value="false" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
+            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
         </service>
          
     </application>
