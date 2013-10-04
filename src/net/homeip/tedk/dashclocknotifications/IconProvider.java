@@ -78,8 +78,10 @@ public class IconProvider extends ContentProvider {
 		File temp = null;
 		FileOutputStream fos = null;
 		try {
-			temp = File.createTempFile(packageName + "." + resourceId, ".png");
-			temp.deleteOnExit();
+			temp = new File(getContext().getCacheDir(), packageName + "-" + resourceId + ".png");
+			if(temp.exists()) {
+				return ParcelFileDescriptor.open(temp, ParcelFileDescriptor.MODE_READ_ONLY);
+			}
 			fos = new FileOutputStream(temp);
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;

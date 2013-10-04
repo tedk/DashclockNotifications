@@ -117,7 +117,7 @@ public class DashclockService extends DashClockExtension {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		//destroy(this);
+		destroy(this);
 		widgets.remove(this);
 	}
 	

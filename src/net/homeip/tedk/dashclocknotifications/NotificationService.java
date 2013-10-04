@@ -21,18 +21,30 @@ public class NotificationService extends NotificationListenerService {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		setUp();
 		super.onStartCommand(intent, flags, startId);
+		initNotifications();
 		return START_STICKY;
 	}
-
-	public void setUp() {
-		dateFormat = DateFormat.getTimeInstance(DateFormat.LONG);
-		pm = getPackageManager();
-		for(StatusBarNotification event : getActiveNotifications())
+	
+	private void initNotifications() {
+		StatusBarNotification[] events = null;
+		try {
+			events = getActiveNotifications();
+		} catch (Exception e) {
+			Log.e("NotificationListenerService", "Exception trying to get active notifications", e);
+		}
+		if(events == null)
+			return;
+		for(StatusBarNotification event : events)
 		{
 			DashclockService.NotificationInfo ni = getNotificationInfo(event);
 			if(ni != null)
 				DashclockService.addNotification(ni);
 		}
+	}
+
+	public void setUp() {
+		dateFormat = DateFormat.getTimeInstance(DateFormat.LONG);
+		pm = getPackageManager();
 	}
 	
 	public void tearDown() {
