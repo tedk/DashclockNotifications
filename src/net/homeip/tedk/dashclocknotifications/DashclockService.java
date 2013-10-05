@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.PendingIntent;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -52,17 +51,18 @@ public class DashclockService extends DashClockExtension {
 	
 	private static volatile int initializationCount = 0;
 	
-	private synchronized static void initialize(Context context) {
+	private synchronized static void initialize(DashclockService service) {
+		widgets.add(service);
 		if(initializationCount == 0) {
-			context.startService(new Intent(context, NotificationService.class));
+			service.startService(new Intent(service, NotificationService.class));
 		}
 		++initializationCount;
 	}
 	
-	private synchronized static void destroy(Context context) {
+	private synchronized static void destroy(DashclockService service) {
 		--initializationCount;
 		if(initializationCount == 0) {
-			context.stopService(new Intent(context, NotificationService.class));
+			service.stopService(new Intent(service, NotificationService.class));
 		}
 	}
 	
@@ -80,6 +80,7 @@ public class DashclockService extends DashClockExtension {
 		if(index >= 0 && index < notifications.size()) {
 			notifications.remove(index);
 		}
+		updateWidgets();
 	}
 	
 	private synchronized static NotificationInfo getNotification(int num) {
@@ -91,7 +92,7 @@ public class DashclockService extends DashClockExtension {
 		updateWidgets();
 	}
 	
-	public static void updateWidgets() {
+	private static synchronized void updateWidgets() {
 		for(DashclockService ds : widgets) {
 			ds.updateWidget();
 		}
@@ -110,7 +111,6 @@ public class DashclockService extends DashClockExtension {
 		} catch (NameNotFoundException e) {
 			Log.e("DashclockService", "Could not get ServiceInfo", e);
 		}	
-		widgets.add(this);
 		initialize(this);
 	}
 	
@@ -118,7 +118,6 @@ public class DashclockService extends DashClockExtension {
 	public void onDestroy() {
 		super.onDestroy();
 		destroy(this);
-		widgets.remove(this);
 	}
 	
 	@Override
