@@ -20,13 +20,17 @@ public class DashclockService extends DashClockExtension {
 	public static class NotificationInfo {
 		public String time;
 		public String app;
+		public String tag;
+		public int id;
 		public String text;
 		public int num;
 		public Uri iconUri;
 		public PendingIntent intent;
-		public NotificationInfo(String time, String app, String text, int num, Uri iconUri, PendingIntent intent) {
+		public NotificationInfo(String time, String app, String tag, int id, String text, int num, Uri iconUri, PendingIntent intent) {
 			this.time = time;
 			this.app = app;
+			this.tag = tag;
+			this.id = id;
 			this.text = text;
 			this.num = num;
 			this.iconUri = iconUri;
@@ -42,7 +46,7 @@ public class DashclockService extends DashClockExtension {
 				return false;
 			
 			NotificationInfo ni = (NotificationInfo) that;
-			return this.app.equals(ni.app) && this.text.equals(ni.text);
+			return this.app.equals(ni.app) && this.id == ni.id && (this.tag == null ? ni.tag == null : this.tag.equals(ni.tag));
 		}
 	}
 	
@@ -60,10 +64,10 @@ public class DashclockService extends DashClockExtension {
 	}
 	
 	private synchronized static void destroy(DashclockService service) {
-		--initializationCount;
-		if(initializationCount == 0) {
-			service.stopService(new Intent(service, NotificationService.class));
-		}
+//		--initializationCount;
+//		if(initializationCount == 0) {
+//			service.stopService(new Intent(service, NotificationService.class));
+//		}
 	}
 	
 	public synchronized static void addNotification(NotificationInfo ni) {

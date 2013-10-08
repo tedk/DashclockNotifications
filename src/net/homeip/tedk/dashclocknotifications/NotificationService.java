@@ -5,7 +5,9 @@ import java.util.Date;
 
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.service.notification.NotificationListenerService;
@@ -21,7 +23,8 @@ public class NotificationService extends NotificationListenerService {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		setUp();
 		super.onStartCommand(intent, flags, startId);
-		initNotifications();
+//		initNotifications();
+		registerReciever();
 		return START_STICKY;
 	}
 	
@@ -40,6 +43,13 @@ public class NotificationService extends NotificationListenerService {
 			if(ni != null)
 				DashclockService.addNotification(ni);
 		}
+	}
+	
+	private void registerReciever() {
+		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+		filter.addAction(Intent.ACTION_USER_PRESENT);
+		BroadcastReceiver br = new ScreenReceiver();
+		registerReceiver(br, filter);
 	}
 
 	public void setUp() {
@@ -60,6 +70,8 @@ public class NotificationService extends NotificationListenerService {
 
 	@Override
 	public void onNotificationPosted(StatusBarNotification event) {
+		if(!ScreenReceiver.locked)
+			return;
 		DashclockService.NotificationInfo ni = getNotificationInfo(event);
 		if(ni != null)
 			DashclockService.addNotification(ni);
@@ -126,7 +138,7 @@ public class NotificationService extends NotificationListenerService {
 //				}
 //		}
 		PendingIntent intent = n.contentIntent;
-		return new DashclockService.NotificationInfo(time, appName, text, num, iconUri, intent);
+		return new DashclockService.NotificationInfo(time, appName, event.getTag(), event.getId(), text, num, iconUri, intent);
 	}
 
 }
