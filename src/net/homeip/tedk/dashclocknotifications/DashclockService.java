@@ -1,6 +1,7 @@
 package net.homeip.tedk.dashclocknotifications;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.PendingIntent;
@@ -17,20 +18,22 @@ import com.google.android.apps.dashclock.api.ExtensionData;
 
 public class DashclockService extends DashClockExtension {
 	
-	public static class NotificationInfo {
-		public String time;
+	public static class NotificationInfo implements Comparable<NotificationInfo>{
+		public long time;
 		public String app;
 		public String tag;
 		public int id;
+		public int priority;
 		public String text;
 		public int num;
 		public Uri iconUri;
 		public PendingIntent intent;
-		public NotificationInfo(String time, String app, String tag, int id, String text, int num, Uri iconUri, PendingIntent intent) {
+		public NotificationInfo(long time, String app, String tag, int id, int priority, String text, int num, Uri iconUri, PendingIntent intent) {
 			this.time = time;
 			this.app = app;
 			this.tag = tag;
 			this.id = id;
+			this.priority = priority;
 			this.text = text;
 			this.num = num;
 			this.iconUri = iconUri;
@@ -48,10 +51,29 @@ public class DashclockService extends DashClockExtension {
 			NotificationInfo ni = (NotificationInfo) that;
 			return this.app.equals(ni.app) && this.id == ni.id && (this.tag == null ? ni.tag == null : this.tag.equals(ni.tag));
 		}
+		public int compareTo(NotificationInfo that) {
+			final int BEFORE = -1;
+		    final int EQUAL = 0;
+		    final int AFTER = 1;
+		    
+		    if (this == that) return EQUAL;
+		    
+		    Log.d("dashclockservice", this.app + ": "+ this.priority);
+		    Log.d("dashclockservice", that.app + ": "+ that.priority);
+		    
+		    // these are backwards on purpose.  show higher priority first
+		    if (this.priority < that.priority) return AFTER;
+		    if (this.priority > that.priority) return BEFORE;
+		    
+		    if (this.time < that.time) return AFTER;
+		    if (this.time > that.time) return BEFORE;
+		    
+		    return EQUAL;
+		}
 	}
 	
-	private static List<NotificationInfo> notifications = new ArrayList<NotificationInfo>();
-	private static List<DashclockService> widgets = new ArrayList<DashclockService>();
+	private static List<NotificationInfo> notifications = new ArrayList<NotificationInfo>(50);
+	private static List<DashclockService> widgets = new ArrayList<DashclockService>(50);
 	
 	private static volatile int initializationCount = 0;
 	
@@ -64,26 +86,35 @@ public class DashclockService extends DashClockExtension {
 	}
 	
 	private synchronized static void destroy(DashclockService service) {
-//		--initializationCount;
-//		if(initializationCount == 0) {
-//			service.stopService(new Intent(service, NotificationService.class));
-//		}
+		widgets.remove(service);
+		--initializationCount;
+		if(initializationCount == 0) {
+			service.stopService(new Intent(service, NotificationService.class));
+		}
 	}
 	
 	public synchronized static void addNotification(NotificationInfo ni) {
-		removeNotification(ni);
+		notifications.remove(ni);
 		notifications.add(0, ni);
 		if(notifications.size() > 50) {
 			notifications.remove(50);
 		}
+		Collections.sort(notifications);
+		updateWidgets();
+	}
+	
+	public synchronized static void addNotifications(List<NotificationInfo> niList) {
+		notifications.removeAll(niList);
+		notifications.addAll(0, niList);
+		while(notifications.size() > 50) {
+			notifications.remove(50);
+		}
+		Collections.sort(notifications);
 		updateWidgets();
 	}
 	
 	public synchronized static void removeNotification(NotificationInfo ni) {
-		int index = notifications.indexOf(ni);
-		if(index >= 0 && index < notifications.size()) {
-			notifications.remove(index);
-		}
+		notifications.remove(ni);
 		updateWidgets();
 	}
 	
@@ -120,8 +151,8 @@ public class DashclockService extends DashClockExtension {
 	
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		destroy(this);
+		super.onDestroy();
 	}
 	
 	@Override
@@ -135,14 +166,16 @@ public class DashclockService extends DashClockExtension {
 			publishUpdate(new ExtensionData()
     		.visible(false));
 		} else {
-			String body = ni.text;
-			publishUpdate(new ExtensionData()
-        		.visible(true)
-        		.iconUri(ni.iconUri)
-        		.status(ni.text)
-        		.expandedTitle(ni.app)
-        		.expandedBody(body));
-        		//.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.getCreatorPackage()))));
+			ExtensionData ed = new ExtensionData();
+			ed.visible(true);
+			ed.iconUri(ni.iconUri);
+			ed.status(ni.text == null ? ni.app : ni.text);
+			ed.expandedTitle(ni.app);
+			if(ni.text != null)
+				ed.expandedBody(ni.text);
+			if(ni.intent != null)
+				ed.clickIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("dashclocknotifications://" + ni.intent.getCreatorPackage())));
+			publishUpdate(ed);
 		}
 	}
 	

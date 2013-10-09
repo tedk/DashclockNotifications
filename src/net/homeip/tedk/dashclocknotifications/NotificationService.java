@@ -1,7 +1,8 @@
 package net.homeip.tedk.dashclocknotifications;
 
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
@@ -23,8 +25,8 @@ public class NotificationService extends NotificationListenerService {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		setUp();
 		super.onStartCommand(intent, flags, startId);
-//		initNotifications();
-		registerReciever();
+		initNotifications();
+//		registerReciever();
 		return START_STICKY;
 	}
 	
@@ -37,12 +39,14 @@ public class NotificationService extends NotificationListenerService {
 		}
 		if(events == null)
 			return;
+		List<DashclockService.NotificationInfo> niList = new ArrayList<DashclockService.NotificationInfo>(events.length);
 		for(StatusBarNotification event : events)
 		{
 			DashclockService.NotificationInfo ni = getNotificationInfo(event);
 			if(ni != null)
-				DashclockService.addNotification(ni);
+				niList.add(ni);
 		}
+		DashclockService.addNotifications(niList);
 	}
 	
 	private void registerReciever() {
@@ -70,8 +74,8 @@ public class NotificationService extends NotificationListenerService {
 
 	@Override
 	public void onNotificationPosted(StatusBarNotification event) {
-		if(!ScreenReceiver.locked)
-			return;
+//		if(!ScreenReceiver.locked)
+//			return;
 		DashclockService.NotificationInfo ni = getNotificationInfo(event);
 		if(ni != null)
 			DashclockService.addNotification(ni);
@@ -93,10 +97,10 @@ public class NotificationService extends NotificationListenerService {
 
 		String text = n.tickerText == null || n.tickerText.toString().trim().length() == 0 ? null : n.tickerText.toString().trim();
 		
-		if (text == null)
-			return null; // ignore blank notifications (downloads, gps, keyboard, etc.)
+//		if (text == null)
+//			return null; // ignore blank notifications (downloads, gps, keyboard, etc.)
 
-		String time = dateFormat.format(new Date());
+		long time = n.when;
 		String packageName = event.getPackageName().toString();
 		String appName = null;
 		try {
@@ -138,7 +142,8 @@ public class NotificationService extends NotificationListenerService {
 //				}
 //		}
 		PendingIntent intent = n.contentIntent;
-		return new DashclockService.NotificationInfo(time, appName, event.getTag(), event.getId(), text, num, iconUri, intent);
+		int priority = n.priority;
+		return new DashclockService.NotificationInfo(time, appName, event.getTag(), event.getId(), priority, text, num, iconUri, intent);
 	}
 
 }
