@@ -58,9 +58,6 @@ public class DashclockService extends DashClockExtension {
 		    
 		    if (this == that) return EQUAL;
 		    
-		    Log.d("dashclockservice", this.app + ": "+ this.priority);
-		    Log.d("dashclockservice", that.app + ": "+ that.priority);
-		    
 		    // these are backwards on purpose.  show higher priority first
 		    if (this.priority < that.priority) return AFTER;
 		    if (this.priority > that.priority) return BEFORE;

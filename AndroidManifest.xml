@@ -47,7 +47,7 @@
 		
 		for i in $(seq -w 1 50); do printf "package net.homeip.tedk.dashclocknotifications.slot;\n\nimport net.homeip.tedk.dashclocknotifications.DashclockService;\n\npublic class DashclockSlot$i extends DashclockService {\n\n\n}\n\n" > DashclockSlot$i.java; done
 		
-		for i in $(seq -w 1 50); do printf '        <service android:name=".slot.DashclockSlot'$i'"\n            android:icon="@drawable/ic_launcher"\n            android:label="@string/app_slot'$i'"\n            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">\n            <intent-filter>\n                <action android:name="com.google.android.apps.dashclock.Extension" />\n            </intent-filter>\n            <meta-data android:name="protocolVersion" android:value="2" />\n            <meta-data android:name="worldReadable" android:value="false" />\n            <meta-data android:name="description"\n                android:value="@string/notification_service_description" />\n            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />\n        </service>\n'; done
+		for i in $(seq -w 1 50); do printf '        <service android:name=".slot.DashclockSlot'$i'"\n            android:icon="@drawable/ic_launcher"\n            android:label="@string/app_slot'$i'"\n            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">\n            <intent-filter>\n                <action android:name="com.google.android.apps.dashclock.Extension" />\n            </intent-filter>\n            <meta-data android:name="protocolVersion" android:value="2" />\n            <meta-data android:name="worldReadable" android:value="true" />\n            <meta-data android:name="description"\n                android:value="@string/notification_service_description" />\n            <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />\n        </service>\n'; done
 		
 		for i in $(seq -w 1 50); do printf '    <string name="app_slot'$i'">Notification #'$i'</string>\n'; done
 		
@@ -61,7 +61,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -74,7 +74,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -87,7 +87,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -100,7 +100,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -113,7 +113,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -126,7 +126,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -139,7 +139,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -152,7 +152,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -165,7 +165,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -178,7 +178,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -191,7 +191,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -204,7 +204,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -217,7 +217,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -230,7 +230,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -243,7 +243,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -256,7 +256,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -269,7 +269,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -282,7 +282,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -295,7 +295,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -308,7 +308,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -321,7 +321,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -334,7 +334,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -347,7 +347,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -360,7 +360,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -373,7 +373,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -386,7 +386,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -399,7 +399,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -412,7 +412,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -425,7 +425,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -438,7 +438,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -451,7 +451,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -464,7 +464,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -477,7 +477,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -490,7 +490,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -503,7 +503,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -516,7 +516,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -529,7 +529,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -542,7 +542,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -555,7 +555,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -568,7 +568,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -581,7 +581,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -594,7 +594,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -607,7 +607,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -620,7 +620,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -633,7 +633,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -646,7 +646,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -659,7 +659,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -672,7 +672,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -685,7 +685,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
@@ -698,7 +698,7 @@
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
             <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="false" />
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
                 android:value="@string/notification_service_description" />
             <meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
