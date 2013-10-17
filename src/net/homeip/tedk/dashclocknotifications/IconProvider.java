@@ -11,6 +11,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -86,6 +88,12 @@ public class IconProvider extends ContentProvider {
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			Bitmap iconBitmap = BitmapFactory.decodeResource(c.getResources(), resourceId, options);
+			if(iconBitmap == null)
+			{
+				iconBitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
+				Canvas background = new Canvas(iconBitmap);
+				background.drawColor(Color.TRANSPARENT);
+			}
 			iconBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			return ParcelFileDescriptor.open(temp, ParcelFileDescriptor.MODE_READ_ONLY);
