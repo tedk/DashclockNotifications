@@ -1,24 +1,20 @@
 package net.homeip.tedk.dashclocknotifications;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.SystemClock;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 public class NotificationService extends NotificationListenerService {
 
-	private DateFormat dateFormat = null;
+//	private DateFormat dateFormat = null;
 	private PackageManager pm = null;
 
 	@Override
@@ -49,20 +45,20 @@ public class NotificationService extends NotificationListenerService {
 		DashclockService.addNotifications(niList);
 	}
 	
-	private void registerReciever() {
-		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-		filter.addAction(Intent.ACTION_USER_PRESENT);
-		BroadcastReceiver br = new ScreenReceiver();
-		registerReceiver(br, filter);
-	}
+//	private void registerReciever() {
+//		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+//		filter.addAction(Intent.ACTION_USER_PRESENT);
+//		BroadcastReceiver br = new ScreenReceiver();
+//		registerReceiver(br, filter);
+//	}
 
 	public void setUp() {
-		dateFormat = DateFormat.getTimeInstance(DateFormat.LONG);
+//		dateFormat = DateFormat.getTimeInstance(DateFormat.LONG);
 		pm = getPackageManager();
 	}
 	
 	public void tearDown() {
-		dateFormat = null;
+//		dateFormat = null;
 		pm = null;
 	}
 
