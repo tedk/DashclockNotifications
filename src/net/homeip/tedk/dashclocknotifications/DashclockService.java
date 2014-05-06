@@ -20,6 +20,7 @@ public class DashclockService extends DashClockExtension {
 	
 	public static class NotificationInfo implements Comparable<NotificationInfo>{
 		public long time;
+		public String packageName;
 		public String app;
 		public String tag;
 		public int id;
@@ -28,8 +29,9 @@ public class DashclockService extends DashClockExtension {
 		public int num;
 		public Uri iconUri;
 		public PendingIntent intent;
-		public NotificationInfo(long time, String app, String tag, int id, int priority, String text, int num, Uri iconUri, PendingIntent intent) {
+		public NotificationInfo(long time, String packageName, String app, String tag, int id, int priority, String text, int num, Uri iconUri, PendingIntent intent) {
 			this.time = time;
+			this.packageName = packageName;
 			this.app = app;
 			this.tag = tag;
 			this.id = id;
@@ -49,10 +51,10 @@ public class DashclockService extends DashClockExtension {
 				return false;
 			
 			NotificationInfo ni = (NotificationInfo) that;
-			return this.app.equals(ni.app) && this.id == ni.id && (this.tag == null ? ni.tag == null : this.tag.equals(ni.tag));
+			return this.packageName.equals(ni.packageName) && this.id == ni.id && (this.tag == null ? ni.tag == null : this.tag.equals(ni.tag));
 		}
 		public int compareTo(NotificationInfo that) {
-			final int BEFORE = -1;
+		    final int BEFORE = -1;
 		    final int EQUAL = 0;
 		    final int AFTER = 1;
 		    

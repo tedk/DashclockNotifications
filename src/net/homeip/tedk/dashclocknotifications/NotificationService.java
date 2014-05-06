@@ -139,7 +139,7 @@ public class NotificationService extends NotificationListenerService {
 //		}
 		PendingIntent intent = n.contentIntent;
 		int priority = n.priority;
-		return new DashclockService.NotificationInfo(time, appName, event.getTag(), event.getId(), priority, text, num, iconUri, intent);
+		return new DashclockService.NotificationInfo(time, packageName, appName, event.getTag(), event.getId(), priority, text, num, iconUri, intent);
 	}
 
 }
